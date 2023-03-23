@@ -1,4 +1,4 @@
-FROM olizilla/ipfs-dns-deploy:1.8
+FROM ipfs/ipfs-dns-deploy:latest
 
 COPY "entrypoint.sh" "/entrypoint.sh"
 
