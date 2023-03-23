@@ -8,9 +8,9 @@ PIN_NAME="https://github.com/$GITHUB_REPOSITORY/commits/$GITHUB_SHA"
 
 echo "Pinning $INPUT_DIR to $INPUT_CLUSTER_HOST"
 
-update_github_status () {
+update_github_status() {
   # only try and update the satus if we have a github token
-  if [ -z "$GITHUB_TOKEN" ] ; then
+  if [ -z "$GITHUB_TOKEN" ]; then
     echo "Not setting status. No GITHUB_TOKEN set"
     return 0
   fi
@@ -26,24 +26,31 @@ update_github_status () {
     --arg target_url "$TARGET_URL" \
     --arg description "$DESCRIPTION" \
     --arg context "$CONTEXT" \
-    '{ state: $state, target_url: $target_url, description: $description, context: $context }' )
+    '{ state: $state, target_url: $target_url, description: $description, context: $context }')
 
   curl --output /dev/null --silent --show-error -X POST -H "Authorization: Bearer $GITHUB_TOKEN" -H 'Content-Type: application/json' --data "$params" $STATUS_API_URL
 }
 
 update_github_status "pending" "Pinnning to IPFS cluster" "https://$INPUT_IPFS_GATEWAY"
 
+if [ -n "$INPUT_CLUSTER_USER" ] && [ -n "$INPUT_CLUSTER_PASSWORD" ]; then
+  echo "Using basic auth"
+  AUTH="--basic-auth $INPUT_CLUSTER_USER:$INPUT_CLUSTER_PASSWORD"
+else
+  echo "Using without auth"
+fi
+
 # pin to cluster
 root_cid=$(ipfs-cluster-ctl \
-    --host "$INPUT_CLUSTER_HOST" \
-    --basic-auth "$INPUT_CLUSTER_USER:$INPUT_CLUSTER_PASSWORD" \
-    add \
-    --quieter \
-    --local \
-    --wait \
-    --cid-version 1 \
-    --name "$PIN_NAME" \
-    --recursive "$INPUT_DIR" )
+  --host "$INPUT_CLUSTER_HOST" \
+  $AUTH \
+  add \
+  --quieter \
+  --local \
+  --wait \
+  --cid-version 1 \
+  --name "$PIN_NAME" \
+  --recursive "$INPUT_DIR")
 
 preview_url="https://$root_cid.ipfs.$INPUT_IPFS_GATEWAY"
 
@@ -51,6 +58,6 @@ update_github_status "success" "View on IPFS" "$preview_url"
 
 echo "Pinned to IPFS - $preview_url"
 
-echo "cid=$root_cid" >> $GITHUB_OUTPUT
+echo "cid=$root_cid" >>$GITHUB_OUTPUT
 
-echo "url=$preview_url" >> $GITHUB_OUTPUT
+echo "url=$preview_url" >>$GITHUB_OUTPUT
