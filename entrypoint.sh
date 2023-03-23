@@ -40,6 +40,8 @@ else
   echo "Using without auth"
 fi
 
+ipfs-cluster-ctl --version
+
 # pin to cluster
 root_cid=$(ipfs-cluster-ctl \
   --host "$INPUT_CLUSTER_HOST" \
@@ -50,7 +52,13 @@ root_cid=$(ipfs-cluster-ctl \
   --wait \
   --cid-version 1 \
   --name "$PIN_NAME" \
-  --recursive "$INPUT_DIR")
+  --recursive "$INPUT_DIR") || {
+  # If it fails, show the ipfs-cluster-ctl command and the error message
+  echo "ipfs-cluster-ctl --host $INPUT_CLUSTER_HOST *AUTH-MAYBE* add --quieter --local --wait --cid-version 1 --name '$PIN_NAME' --recursive $INPUT_DIR $INPUT_DIR" 1>&2
+  echo "$root_cid" 1>&2
+  echo "Failed to pin to cluster" 1>&2
+  false
+}
 
 preview_url="https://$root_cid.ipfs.$INPUT_IPFS_GATEWAY"
 
