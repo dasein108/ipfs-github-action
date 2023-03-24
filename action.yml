@@ -1,0 +1,39 @@
+# action.yml
+name: "Add to IPFS"
+description: "Pin a directory to an IPFS Cluster"
+author: olizilla
+branding:
+  icon: "box"
+  color: "blue"
+inputs:
+  path_to_add:
+    description: "Directory path to add to IPFS"
+    required: true
+  cluster_user:
+    description: "Username for the IPFS Cluster instance"
+    required: true
+  cluster_password:
+    description: "Password for the IPFS Cluster instance"
+    required: true
+  cluster_host:
+    description: "Multiaddr for the IPFS Cluster"
+    default: "/dnsaddr/cluster.ipfs.io"
+    required: true
+  wait_for_pin:
+    description: "Wait until data become pinned"
+    default: false
+    required: false
+  ipfs_gateway:
+    description: "IPFS subdomain gateway to use for preview url"
+    default: "dweb.link"
+    required: true
+outputs:
+  cid:
+    description: "The IPFS Content ID for the directory"
+  url:
+    description: "Preview URL"
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  # args:
+  #   - ${{ inputs.path_to_add }}
