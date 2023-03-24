@@ -9,7 +9,7 @@ echo "Pinning $INPUT_DIR to $INPUT_CLUSTER_HOST"
 
 if [ -n "$INPUT_CLUSTER_USER" ] && [ -n "$INPUT_CLUSTER_PASSWORD" ]; then
   echo "Using basic auth"
-  AUTH="--basic-auth $INPUT_CLUSTER_USER:$INPUT_CLUSTER_PASSWORD --force-http"
+  AUTH="--basic-auth $INPUT_CLUSTER_USER:$INPUT_CLUSTER_PASSWORD"
 else
   echo "Using without auth"
 fi
