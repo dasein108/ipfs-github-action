@@ -9,7 +9,7 @@ Simplified and slightly improved version of https://github.com/ipfs-shipyard/ipf
 Use this action from a workflow that build out your static site to a directory. In this example we ask ipfs-github-action to pin the `public` dir in the current workspace to cluster.ipfs.io
 
 ```yaml
-- uses: ipfs-shipyard/ipfs-github-action@v2
+- uses: dasein108/ipfs-github-action@v1
   id: ipfs
   with:
     path_to_add: public
