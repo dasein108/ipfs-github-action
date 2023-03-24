@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/sh
 
 # Interpolate env vars in the $INPUT_PATH_TO_ADD, see: https://docs.github.com/en/actions/creating-actions/dockerfile-support-for-github-actions#entrypoint
 # This handles situation where user provides path to add as $GITHUB_WORKSPACE/some/path
@@ -17,6 +17,8 @@ fi
 if [-n "$WAIT_FOR_PIN" ]; then
   echo "Waiting for pin to be replicated"
   WAIT=" --wait"
+else
+  echo "Skipping wait for pin to be replicated"
 fi
 
 # pin to cluster
