@@ -38,7 +38,7 @@ root_cid=$(ipfs-cluster-ctl \
   false
 }
 
-preview_url="https://$root_cid.ipfs.$INPUT_IPFS_GATEWAY"
+preview_url="https://$INPUT_IPFS_GATEWAY/ipfs/$root_cid"
 
 echo "Pinned to IPFS - $preview_url"
 
