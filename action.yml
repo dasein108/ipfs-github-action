@@ -11,10 +11,10 @@ inputs:
     required: true
   cluster_user:
     description: "Username for the IPFS Cluster instance"
-    required: true
+    required: false
   cluster_password:
     description: "Password for the IPFS Cluster instance"
-    required: true
+    required: false
   cluster_host:
     description: "Multiaddr for the IPFS Cluster"
     default: "/dnsaddr/cluster.ipfs.io"
