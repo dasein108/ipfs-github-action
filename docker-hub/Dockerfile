@@ -1,4 +1,4 @@
-FROM node:16.13
+FROM --platform=linux/amd64 node:16.13
 MAINTAINER dasein <acidpictures@gmai.com>
 
 
