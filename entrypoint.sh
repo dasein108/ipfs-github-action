@@ -30,7 +30,7 @@ root_cid=$(ipfs-cluster-ctl \
   --local \
   $WAIT \
   --no-stream \
-  --cid-version 1 \
+  --cid-version 0 \
   --name "$PIN_NAME" \
   --recursive "$INPUT_DIR") || {
   echo "$root_cid" 1>&2

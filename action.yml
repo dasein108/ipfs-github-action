@@ -25,7 +25,7 @@ inputs:
     required: false
   ipfs_gateway:
     description: "IPFS subdomain gateway to use for preview url"
-    default: "dweb.link"
+    default: "gateway.ipfs.cybernode.ai"
     required: true
 outputs:
   cid:
